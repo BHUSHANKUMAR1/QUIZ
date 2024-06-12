@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container "  style="margin-top: 100px !important;">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h1 class="mt-5">Your Quiz Score</h1>
+            <p>Your score is: <span class="font-weight-bold">{{ score }}%</span></p>
+            <p>Thank you for taking the quiz!</p>
+            <a href="{% url 'qzz' %}" class="btn btn-primary">Home</a>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+
+{% comment %} <script>
+        setTimeout(function() {
+            window.location.href = "{% url 'qzz' %}"; // Redirect to qzz page after 3 seconds
+        }, 3000);
+    </script> {% endcomment %}
+
+    {% comment %} <a class="my-button"  href="{% url "qzz" %}">Click Me</a> {% endcomment %}

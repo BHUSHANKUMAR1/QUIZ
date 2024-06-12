@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% block title %} Add Options {% endblock %}
+
+
+{% block body %}
+<div class="container mt-4" style="margin-top: 100px !important;">
+    <h3 > {{question}}          of             {{question.quiz}}</h3>
+    <form action="#" method="POST"> {% csrf_token %}
+        {{ formset.as_p }}
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+</div>
+
+
+
+
+
+{% comment %} <div class="container mt-4">
+    <h1>{{ question }} of {{ question.quiz }}</h1>
+    <form action="#" method="POST">
+        {% csrf_token %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Content</th>
+                    <th>Correct</th>
+                    
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                    <tr>
+                        <td>{{ form.content }}</td>
+                        <td>{{ form.correct }}</td>
+                        
+                        <td>{{ form.DELETE }}</td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-info">Submit</button>
+    </form>
+</div> {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock body %}
+
+
+{% block js %}
+
+{% comment %} <script>
+    {% if alert %}
+alert("Question is added successfully!!!");
+document.location = '/add_question/'
+{% endif %}
+</script> {% endcomment %}
+
+
+{% endblock js %}
+
+
+{% comment %} <form action="#" method="POST"> 
+    {% csrf_token %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <h1>{{ question }} of {{ question.quiz }}</h1>
+            </div>
+        </div>
+        {% for form in formset.forms %}
+            <div class="mb-3 border p-1">
+                <fieldset class="border p-1">
+                    <legend class="w-auto">{{ form.prefix }}</legend>
+                    {{ form.as_p }}
+                </fieldset>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-info">Submit</button>
+            </div>
+        </div>
+    </div>
+</form> {% endcomment %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %} Results {% endblock %}
+
+
+{% block body %}
+
+<div class='container mb-5' style="margin-top: 100px !important;" >
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S no</th>
+        <th scope="col">Question</th>
+        <th scope="col">Your Answer</th>
+        <th scope="col">Correct</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for response in qresult.user_responses %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td><strong></strong> {{ response.question }}</td>
+        <td><strong> </strong> {{ response.selected_answer }}</td>
+        <td>{% if response.is_correct %}
+          <span style="color: green;">Correct</span>
+      {% else %}
+          <span style="color: red;">Incorrect</span>
+      {% endif %}</td>
+      </tr>
+      
+      {% endfor %}
+      
+    </tbody>
+  </table>
+</div>
+
+
+
+
+{% endblock  %}
+
+

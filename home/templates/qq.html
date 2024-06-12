@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+
+<div class="container" style="margin-top: -40px; position: fixed;">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>QUIZ : {{ quiz.name }}</h2>
+            <h2>No of ques : {{ quiz.number_of_questions }}</h2>
+        </div>
+        
+         
+    </div>
+</div>
+
+<div class="col-md-2" style="margin-top: -40px !important; position: fixed; right: 0;">
+    <h2 style="display: inline;">Time : </h2>
+    <h2 id="timer" style="display: inline;">{{ quiz.time }}</h2>
+</div>
+
+
+
+
+<div class="container" style="margin-top: 100px;">
+    
+    <form id="quizForm" action="{% url 'submit' quiz_id=quiz_id %}" method="post">
+        {% csrf_token %}
+        {% for question_dict in questions %}
+        {% for question, options in question_dict.items %}
+        
+        <table class="table table-success table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">{{ forloop.parentloop.counter }}. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   {{ question }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for option_id, option_content in options %}
+                <tr>
+                    <td>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+                            {% cycle 'a' 'b' 'c' 'd' as letter %}. 
+                            <input type="radio" id="option_{{ option_id }}" name="question_{{ question.id }}" value="{{ option_id }}"> 
+                            {{ option_content }}
+                        </label>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>       
+        {% endfor %}
+        {% endfor %}
+        <input type="submit" value="Submit" style="margin-bottom: 15px;">
+    </form>
+</div>
+
+
+
+{% endblock body %}
+
+{% block js %}
+
+<script>
+    {% comment %} // Set the timer duration in seconds
+    var timerDuration = {{ quiz.time }}; // Assuming quiz.time contains the time limit in seconds
+    var timerDisplay = document.getElementById('timer');
+
+    // Update the timer display every second
+    var timerInterval = setInterval(function() {
+        timerDisplay.textContent = timerDuration;
+        timerDuration--;
+        
+        // When timer reaches 0, submit the form
+        if (timerDuration < 0) {
+            clearInterval(timerInterval); // Stop the timer
+            document.getElementById('quizForm').submit(); // Submit the form
+        }
+    }, 1000); {% endcomment %}
+
+
+    // Set the timer duration in minutes
+    var timerDuration = {{ quiz.time }} * 60; // Convert minutes to seconds
+    var timerDisplay = document.getElementById('timer');
+
+    // Update the timer display every second
+    var timerInterval = setInterval(function() {
+        // Convert seconds to minutes and seconds for display
+        var minutes = Math.floor(timerDuration / 60);
+        var seconds = timerDuration % 60;
+        timerDisplay.textContent = minutes + "m " + seconds + "s";
+        timerDuration--;
+        
+        // When timer reaches 0, submit the form
+        if (timerDuration < 0) {
+            clearInterval(timerInterval); // Stop the timer
+            document.getElementById('quizForm').submit(); // Submit the form
+        }
+    }, 1000);
+</script>
+
+
+{% endblock js %}
+
+
+
+
